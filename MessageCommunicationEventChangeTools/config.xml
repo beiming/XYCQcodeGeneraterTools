@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config SrcDir="E:\work\xiaoyaoyou\src" UnPackFunctionName="unpack" UpackClassPrefix="U" UpackClassFunc=".getInstance().unpack">
+	<ObjEvent>HANDLER_STAR_GAZING_OTHER_PERSON_INFO</ObjEvent>
+</config>
