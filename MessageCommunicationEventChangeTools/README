@@ -4,7 +4,7 @@
 2.运行前，先修改本目录config.xml 里的SrcDir 修改为工程根目录
 3.要转换的消息名称，写在config 节点里，<ObjEvent>EventName</ObjEvent>
 4.执行程序
-5.去新生成的Uxxxx.as文件里，用快捷键Ctal+Shift+O 清理多余包，然后根据需求更改unpack函数，提出公共字段，注意销毁等。
+5.去新生成的Uxxxx.as or Sxxxx.as文件里，用快捷键Ctal+Shift+O 清理多余包，然后根据需求更改unpack函数，提出公共字段，注意销毁等。
 
 Notice:
 工具暂不支持多个消息批量处理，建议一个一个消息改动，测试，提交。如果有需要，可以实现批量功能
