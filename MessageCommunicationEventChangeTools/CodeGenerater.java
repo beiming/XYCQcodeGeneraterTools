@@ -3,12 +3,17 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.List;
 import java.io.File;
 import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.io.InputStreamReader;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -243,11 +248,10 @@ public class CodeGenerater
 		return resultStr;
 	}
 	
-	private void changeMessageFunction() throws Exception
+	private void changeMessageFunction(String className, String funcName) throws Exception
 	{
-		File file = new File(CommunicationFileName.get(NowFlag));
-		BufferedReader reader = new BufferedReader(new FileReader(file));
-		Vector allLines = new Vector();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(CommunicationFileName.get(NowFlag)), "UTF-8"));
+		Vector<String> allLines = new Vector<String>();
 		String lineStr = reader.readLine();
 		while (lineStr != null) 
 		{
@@ -259,21 +263,217 @@ public class CodeGenerater
 		int arrLen = allLines.size();
 		//change function name
 		int nameIndex = -1;
-		for(int index = 0; index < arrLen; index++)
+		int index = 0;
+		for(; index < arrLen; index++)
 		{
-			if((String)allLines.get(index).indexOf(nowUnpackMessage) != -1)
+			if(allLines.get(index).indexOf(nowUnpackMessage) != -1)
 			{
 				nameIndex = index;
-				tempStr = (String)allLines.get(index).split(CommunicationEventFlag.get(NowFlag));
+				String tempStr[] = allLines.get(index).split(CommunicationEventFlag.get(NowFlag));
 				tempStr[1] = tempStr[1].replace(funcName, className + ReplaceClassFunc.get(NowFlag));
-				allLines[index] = tempStr[0] + CommunicationEventFlag.get(NowFlag) + tempStr[1];
+				allLines.set(index, tempStr[0] + CommunicationEventFlag.get(NowFlag) + tempStr[1]);
+				//System.out.printf("Debug :\n%s\n", allLines.get(index));
 				break;
 			}
 		}
 		if(nameIndex == -1)
 		{
-			//return
+			return;
 		}
+		//delete original function statement
+		int statement[] = findFuncStatment(allLines, funcName, index);
+		if(statement[0] == -1)
+		{
+			System.out.printf("can\'t find the function declaration statement:\n%s", funcName);
+			return;
+		}
+		ArrayList<String> funcStatement = new ArrayList();//allLines.subList(statement[0], statement[1] + 1);
+		for(index = statement[0]; index < statement[1] + 1; index++)
+		{
+			funcStatement.add(allLines.get(index));
+			allLines.set(index, "CodeGeneraterDeleted");
+		}
+		
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(CommunicationFileName.get(NowFlag)), "UTF-8"));
+		for(index = 0; index < arrLen; index++)
+		{
+			String str = allLines.get(index);
+			if(!str.equals("CodeGeneraterDeleted"))
+			{
+				writer.write(str, 0, str.length());
+				writer.newLine();
+			}
+			writer.flush();
+		}
+		writer.close();
+		System.out.printf("The Original unpack function had replaced with: %s\nand function: %s had removed\n", className + UpackClassFunc, funcName);
+		creatClassFile(className, funcStatement);
+	}
+	
+	private int[] findFuncStatment(Vector<String> lis, String funcName, int startIndex)
+	{
+		int result[] = {-1,-1};
+		int funcDeclarationIndex = -1;
+		int funcDeclarationStartIndex = -1;
+		int funcDeclarationEndIndex = -1;
+		int arrLen = lis.size();
+		String pattern = FunctionStatment + funcName + ".*";
+		for(int index = startIndex; index < arrLen; index++)
+		{
+			if(lis.get(index).matches(pattern))
+			{
+				lis.set(index ,lis.get(index).replace(funcName, ReplaceFunctionName.get(NowFlag)));
+				if(lis.get(index).contains("private"))
+				{
+					lis.set(index, lis.get(index).replace("private", "public"));
+				}
+				else if(lis.get(index).contains("protected"))
+				{
+					lis.set(index, lis.get(index).replace("protected", "public"));
+				}
+				funcDeclarationIndex = index;
+				break;
+			}
+		}
+		if(funcDeclarationIndex == -1)
+		{
+			return result;
+		}
+		
+		//find the first left bracket line index {
+		int bracketMatch = -1;
+		int leftBracketIndex = -1;
+		for(int index = funcDeclarationIndex; index < arrLen; index++)
+		{
+			if(lis.get(index).contains(LeftBracket))
+			{
+				bracketMatch = 1;
+				leftBracketIndex = index + 1;
+				break;
+			}
+		}
+		if(leftBracketIndex == -1)
+		{
+			return result;
+		}
+		
+		//match brackets, find the function statement{}
+		for(int index = leftBracketIndex; index < arrLen; index++)
+		{
+			if(lis.get(index).contains(LeftBracket))
+			{
+				 bracketMatch ++;
+			}
+			if(lis.get(index).contains(RightBracket))
+			{
+				 bracketMatch --;
+			}
+			if(bracketMatch == 0)
+			{
+				funcDeclarationEndIndex = index ;
+				break;
+			}
+		}
+		if(funcDeclarationEndIndex == -1)
+		{
+			return result;
+		}
+		
+		//find the last function end }
+		for(int index = funcDeclarationIndex; index > -1; index--)
+		{
+			if(lis.get(index).contains(RightBracket))
+			{
+				funcDeclarationStartIndex = index + 1;
+				break;
+			}
+		}
+		if(funcDeclarationIndex - funcDeclarationStartIndex > 30)
+		{
+			return result;
+		}
+
+		//find this function annotation area
+		for(int index = funcDeclarationStartIndex; index < funcDeclarationIndex; index++)
+		{
+			if(lis.get(index).contains(LeftAnnotation))
+			{
+				funcDeclarationStartIndex = index;
+				break;
+			}
+		}
+		if(funcDeclarationIndex - funcDeclarationStartIndex > 30)
+		{
+			return result;
+		}
+		if(funcDeclarationEndIndex - funcDeclarationStartIndex < 1)
+		{
+			return result;
+		}
+		result[0] = funcDeclarationStartIndex;
+		result[1] = funcDeclarationEndIndex;
+		return result;
+	}
+	
+	private void creatClassFile(String className, ArrayList<String> lis) throws Exception
+	{
+		String newClassFileName =  OutPutDir.get(NowFlag) + className + ".as";
+		File newClassFile = new File(newClassFileName);
+		if(newClassFile.exists())
+		{
+			System.out.printf("File already exists:\n%s", newClassFileName);
+			return;
+		}
+		newClassFile.createNewFile();
+		InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(TemplateFileName.get(NowFlag))), "UTF-8");
+		OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(newClassFile), "UTF-8");
+		int temp = -1;
+		while((temp = reader.read()) != -1)
+		{
+			writer.write((char)temp);
+		}
+		reader.close();
+		writer.close();
+		
+		BufferedReader changeReader = new BufferedReader(new InputStreamReader(new FileInputStream(newClassFile), "UTF-8"));
+		Vector<String> allLines = new Vector<String>();
+		String lineStr = changeReader.readLine();
+		while (lineStr != null) 
+		{
+			allLines.add(lineStr);
+			lineStr = changeReader.readLine();
+		}
+		changeReader.close();
+		int arrLen = allLines.size();
+		int index = 0;
+		for(index = 0; index < arrLen; index++)
+		{
+			if(allLines.get(index).contains(NewClassNameFlag))
+			{
+				allLines.set(index, allLines.get(index).replace(NewClassNameFlag, className));
+			}
+			else if(allLines.get(index).contains(NewFuncNameFlag.get(NowFlag)))
+			{
+				String funcStr = "";
+				for(int i = 0; i < lis.size(); i++)
+				{
+					funcStr += lis.get(i) + "\r\n";
+				}
+				allLines.set(index, allLines.get(index).replace(NewFuncNameFlag.get(NowFlag), funcStr));
+			}
+		}
+		
+		BufferedWriter changeWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newClassFile), "UTF-8"));
+		for(index = 0; index < arrLen; index++)
+		{
+			String str = allLines.get(index);
+			
+			changeWriter.write(str, 0, str.length());
+			changeWriter.newLine();
+			changeWriter.flush();
+		}
+		changeWriter.close();
+		System.out.printf("Creat Class:\n%s", newClassFileName);		
 	}
 	
 	public static void main(String arg[])

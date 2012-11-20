@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <config SrcDir="E:\work\xiaoyaoyou\src" UnPackFunctionName="unpack" UpackClassPrefix="U" UpackClassFunc=".getInstance().unpack" 
 	SendPackFunctionName="send" SendPackClassPrefix="S" SendPackClassFunc=".getInstance().send">
-	<ObjEvent>HANDLER_MAINUI_EQUIP_REFINE</ObjEvent>
+	<ObjEvent>SEND_ALERT_YES_BUTTON_REQUEST</ObjEvent>
 </config>
