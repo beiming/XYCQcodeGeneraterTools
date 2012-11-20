@@ -284,7 +284,7 @@ public class CodeGenerater
 		int statement[] = findFuncStatment(allLines, funcName, index);
 		if(statement[0] == -1)
 		{
-			System.out.printf("can\'t find the function declaration statement:\n%s", funcName);
+			System.out.printf("can\'t find the function declaration statement:\n%s\n", funcName);
 			return;
 		}
 		ArrayList<String> funcStatement = new ArrayList();//allLines.subList(statement[0], statement[1] + 1);
@@ -421,7 +421,7 @@ public class CodeGenerater
 		File newClassFile = new File(newClassFileName);
 		if(newClassFile.exists())
 		{
-			System.out.printf("File already exists:\n%s", newClassFileName);
+			System.out.printf("File already exists:\n%s\n", newClassFileName);
 			return;
 		}
 		newClassFile.createNewFile();
@@ -473,7 +473,7 @@ public class CodeGenerater
 			changeWriter.flush();
 		}
 		changeWriter.close();
-		System.out.printf("Creat Class:\n%s", newClassFileName);		
+		System.out.printf("Creat Class:\n%s\n", newClassFileName);		
 	}
 	
 	public static void main(String arg[])
