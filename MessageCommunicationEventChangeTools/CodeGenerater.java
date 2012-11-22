@@ -105,7 +105,7 @@ public class CodeGenerater
 				if(messageId.length() > 0 && funcName.length() > 0)
 				{
 					System.out.printf("Find message Id: %s\nFind function name: %s\n", messageId, funcName);
-					changeMessageFunction(ReplaceClassPrefix.get(NowFlag)+messageId, funcName);
+					changeMessageFunction(messageId, funcName);
 				}
 				else
 				{
@@ -248,8 +248,9 @@ public class CodeGenerater
 		return resultStr;
 	}
 	
-	private void changeMessageFunction(String className, String funcName) throws Exception
+	private void changeMessageFunction(String messageId, String funcName) throws Exception
 	{
+		String className = ReplaceClassPrefix.get(NowFlag) + messageId;
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(CommunicationFileName.get(NowFlag)), "UTF-8"));
 		Vector<String> allLines = new Vector<String>();
 		String lineStr = reader.readLine();
@@ -270,6 +271,7 @@ public class CodeGenerater
 			{
 				nameIndex = index;
 				String tempStr[] = allLines.get(index).split(CommunicationEventFlag.get(NowFlag));
+				tempStr[0] = tempStr[0].replace("YXEvent.EventStringSplite(YXEvent." + ObjEvent + ")", messageId);
 				tempStr[1] = tempStr[1].replace(funcName, className + ReplaceClassFunc.get(NowFlag));
 				allLines.set(index, tempStr[0] + CommunicationEventFlag.get(NowFlag) + tempStr[1]);
 				//System.out.printf("Debug :\n%s\n", allLines.get(index));
