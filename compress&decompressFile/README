@@ -1,0 +1,6 @@
+﻿把要压缩的.xml文件，放在本目录下，然后打开 compressFile.py 更改compress函数的参数，为要压缩的文件名。保存。
+然后运行 conpressFile.py 即可生成.x 文件。
+
+如果有.x文件，需要解压缩来排查bug，打开 decompressFile.py 更改要解压缩的文件名，然后运行。即可恢复.xml文件
+
+目前功能很简陋，可以考虑日后作GUI界面
