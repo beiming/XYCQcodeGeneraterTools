@@ -1,4 +1,4 @@
-import zlib, os.path as path
+import zlib, os, os.path as path
 
 def compress(fileName):
     try:
@@ -14,5 +14,10 @@ def compress(fileName):
     except IOError, e:
         print e 
 
+def getFiles():
+    filesList = os.listdir(os.getcwd())
+    filesList = [compress(fileName) for fileName in filesList if path.splitext(fileName)[1] == '.xml']
+
 if __name__ == '__main__':
-    compress('flashlifeskill.xml')
+    getFiles();
+    #compress('flashlifeskill.xml')
