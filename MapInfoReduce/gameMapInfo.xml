@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<gameMapsInfo transFlag='4' transSplit='|' pointSplit=' '>
+	<map id='1021001'  imageTemplate='1' delpoint='114 53' transTo='1021002' name='七情境-喜（1）' />
+	<map id='1021002'  imageTemplate='3' delpoint='55 44' transTo='1021003' name='七情境-喜（2）' />
+	<map id='1021003'  imageTemplate='5' delpoint='40 59' transTo='1021004' name='七情境-喜（3）' />
+	<map id='1021004'  imageTemplate='2' delpoint='57 71' transTo='1021005' name='七情境-喜（4）' />
+	<map id='1021005'  imageTemplate='4' delpoint='40 51' transTo='1021006' name='七情境-喜（5）' />
+	<map id='1021006'  imageTemplate='6' delpoint='57 43' transTo='1021011' name='七情境-喜（6）' />
+	
+	<map id='1021011'  imageTemplate='3' delpoint='17 18' transTo='1021012' name='七情境-怒（1）' />
+	<map id='1021012'  imageTemplate='2' delpoint='53 12' transTo='1021013' name='七情境-怒（2）' />
+	<map id='1021013'  imageTemplate='6' delpoint='5 32' transTo='1021014' name='七情境-怒（3）' />
+	<map id='1021014'  imageTemplate='1' delpoint='53 48' transTo='1021015' name='七情境-怒（4）' />
+	<map id='1021015'  imageTemplate='4' delpoint='14 13' transTo='1021016' name='七情境-怒（5）' />
+	<map id='1021016'  imageTemplate='5' delpoint='30 8' transTo='1021021' name='七情境-怒（6）' />
+	
+	<map id='1021021'  imageTemplate='2' delpoint='57 71' transTo='1021022' name='七情境-哀（1）' />
+	<map id='1021022'  imageTemplate='6' delpoint='5 32' transTo='1021023' name='七情境-哀（2）' />
+	<map id='1021023'  imageTemplate='1' delpoint='114 53' transTo='1021024' name='七情境-哀（3）' />
+	<map id='1021024'  imageTemplate='4' delpoint='40 51' transTo='1021025' name='七情境-哀（4）' />
+	<map id='1021025'  imageTemplate='5' delpoint='40 59' transTo='1021026' name='七情境-哀（5）' />
+	<map id='1021026'  imageTemplate='3' delpoint='55 44' transTo='1021031' name='七情境-哀（6）' />
+	
+	<map id='1021031'  imageTemplate='1' delpoint='53 48' transTo='1021032' name='七情境-惧（1）' />
+	<map id='1021032'  imageTemplate='3' delpoint='55 44' transTo='1021033' name='七情境-惧（2）' />
+	<map id='1021033'  imageTemplate='6' delpoint='57 43' transTo='1021034' name='七情境-惧（3）' />
+	<map id='1021034'  imageTemplate='2' delpoint='53 12' transTo='1021035' name='七情境-惧（4）' />
+	<map id='1021035'  imageTemplate='4' delpoint='40 51' transTo='1021036' name='七情境-惧（5）' />
+	<map id='1021036'  imageTemplate='5' delpoint='40 59' transTo='1021041' name='七情境-惧（6）' />
+	
+	<map id='1021041'  imageTemplate='1' delpoint='114 53' transTo='1021042' name='七情境-爱（1）' />
+	<map id='1021042'  imageTemplate='3' delpoint='55 44' transTo='1021043' name='七情境-爱（2）' />
+	<map id='1021043'  imageTemplate='5' delpoint='40 59' transTo='1021044' name='七情境-爱（3）' />
+	<map id='1021044'  imageTemplate='2' delpoint='53 12' transTo='1021045' name='七情境-爱（4）' />
+	<map id='1021045'  imageTemplate='4' delpoint='40 51' transTo='1021046' name='七情境-爱（5）' />
+	<map id='1021046'  imageTemplate='6' delpoint='57 43' transTo='1021051' name='七情境-爱（6）' />
+	
+	<map id='1021051'  imageTemplate='2' delpoint='57 71' transTo='1021052' name='七情境-恶（1）' />
+	<map id='1021052'  imageTemplate='6' delpoint='5 32' transTo='1021053' name='七情境-恶（2）' />
+	<map id='1021053'  imageTemplate='1' delpoint='114 53' transTo='1021054' name='七情境-恶（3）' />
+	<map id='1021054'  imageTemplate='4' delpoint='40 51' transTo='1021055' name='七情境-恶（4）' />
+	<map id='1021055'  imageTemplate='5' delpoint='30 8' transTo='1021056' name='七情境-恶（5）' />
+	<map id='1021056'  imageTemplate='3' delpoint='55 44' transTo='1021061' name='七情境-恶（6）' />
+	
+	<map id='1021061'  imageTemplate='1' delpoint='53 48' transTo='1021062' name='七情境-欲（1）' />
+	<map id='1021062'  imageTemplate='3' delpoint='55 44' transTo='1021063' name='七情境-欲（2）' />
+	<map id='1021063'  imageTemplate='5' delpoint='40 59' transTo='1021064' name='七情境-欲（3）' />
+	<map id='1021064'  imageTemplate='2' delpoint='57 71' transTo='1021065' name='七情境-欲（4）' />
+	<map id='1021065'  imageTemplate='4' delpoint='40 51' transTo='1021066' name='七情境-欲（5）' />
+	<map id='1021066'  imageTemplate='6' delpoint='57 43' transTo='' name='七情境-欲（6）' />
+</gameMapsInfo>
